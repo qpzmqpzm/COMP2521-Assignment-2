@@ -81,28 +81,23 @@ Graph newGraph(int nV) {
 void  insertEdge(Graph g, Vertex src, Vertex dest, int weight) {
    assert(g != NULL && validV(g, src) && validV(g, dest));
 
-   // Check if not already included
-   if (!inAdjList(g->edges[src].out, dest)) {
-       g->edges[src].out = insertAdjListNode(g->edges[src].out, dest, weight);
-       
-       // Add record of edge coming in by storing in dest node from src
-       if (!inAdjList(g->edges[dest].in, src)) {
-           g->edges[dest].in = insertAdjListNode(g->edges[dest].in, src, weight);
-       }
-       
-       g->nE++;
-   }
+   // Does not check if already include -> can be more than one edge between nodes
+   g->edges[src].out = insertAdjListNode(g->edges[src].out, dest, weight);
+
+   g->edges[dest].in = insertAdjListNode(g->edges[dest].in, src, weight);
+
+   g->nE++;
+
 }
 
 void  removeEdge(Graph g, Vertex src, Vertex dest) {
     assert(g != NULL && validV(g, src) && validV(g, dest));
 
-    // Assuming only one edge can exist between two nodes
     g->edges[src].out = deleteAdjListNode(g->edges[src].out, dest);
 
     // remove record of edge coming in @ dest node
     g->edges[dest].in = deleteAdjListNode(g->edges[dest].in, src);
-    
+
     g->nE--;
 }
 

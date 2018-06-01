@@ -10,11 +10,8 @@
 
 
 // ########## DijkstraHelperPrototypes ##########
-static PredNode* recordVertex (PredNode *list, int v);
 static PredNode* newPredNode (int v);
-static bool isAlreadyVisited (PredNode *list, int v);
 static void freePredList (PredNode *list);
-static void showPredList (PredNode *list);
 
 
 // ########## DijkstraImplementation ##########
@@ -30,7 +27,7 @@ ShortestPaths dijkstra(Graph g, Vertex src) {
 
     int i;
     for (i = 0; i < nV; i++) {
-        // Set all distances to a 'infinite'
+        // Set all distances to a 'infinity'
         paths.dist[i] = INFINITY;
         // Set all preds pointer to NULL
         paths.pred[i] = NULL;
@@ -41,55 +38,71 @@ ShortestPaths dijkstra(Graph g, Vertex src) {
 
     // Create new PQ
     PQ myPQ = newPQ();
-    ItemPQ temp;
-
-    printf("Source Node: %d\n", src);
 
     // Add src to PQ
     ItemPQ currItem;
     currItem.key = src;
     currItem.value = paths.dist[src];
     addPQ(myPQ, currItem);
-    
+
     // Dijsktra's Algorithm Implementation w/ prepared Priority Queue
     while (!PQEmpty(myPQ)) {
         currItem = dequeuePQ(myPQ);
-        printf("Just dequeued from myPQ\n");
-        printf("Item.key = %d, Item.value = %d\n", currItem.key, currItem.value);
 
         // Get list of out edges from current vertex
         AdjList currAdjList = outIncident(g, currItem.key);
-        printf("Just gathered outIncident from dequeued item\n");
-        
-        // Inpect the whole list
-        int j = 0;
-        while (currAdjList != NULL) {
-            printf("Inspecting the adjList - %d\n", j++);
-        
-            // Look into the current Vertex's past and check if w isn't in there
-            if (!isAlreadyVisited(paths.pred[currItem.key], currAdjList->w)) {
-                printf("Checked and entered isAlreadyVisited\n");
-                if (currItem.value + currAdjList->weight < paths.dist[currAdjList->w]) {
-                    printf("Checked if newWeight is less than what is recorded in dist array\n");
-                    // Update dist array record
-                    paths.dist[currAdjList->w] = currItem.value + currAdjList->weight;
-                    printf("Just updated paths.dist[currAdjList->w] == %d\n", paths.dist[currAdjList->w]);
 
-                    // Update predNode list of w
-                    paths.pred[currAdjList->w] = recordVertex(paths.pred[currItem.key], currItem.key);
-                    printf("Just updated the pred node path\n");
-                    showPredList(paths.pred[currAdjList->w]);
+        // Inpect all edges.out
+        while (currAdjList != NULL) {
+            // Ignore any edge that goes back to currVertex
+            // Prevents useless computations
+            if (currAdjList->w != currItem.key) {
+                // Distance to next vertex from currNode
+                int alternateDist = currItem.value + currAdjList->weight;
+
+                // Add next vertex if not already in PQ
+                if (paths.dist[currAdjList->w] == INFINITY) {
+                    ItemPQ temp;
+                    temp.key = currAdjList->w;
+                    temp.value = alternateDist;
+                    addPQ(myPQ, temp);
                 }
 
-                // Add vertex to priority Queue
-                temp.key = currAdjList->w;
-                temp.value = paths.dist[temp.key];
-                printf("Item to add to Queue - temp.key = %d, temp.value = %d\n", temp.key, temp.value);
-                
-                addPQ(myPQ, temp);
+                // if equal, then found an alternate route to curr node w/ equal distance
+                if (alternateDist == paths.dist[currAdjList->w]) {
+                    // Cycle to end of list
+                    PredNode *curr = paths.pred[currAdjList->w];
+                    while (curr->next != NULL) {
+                        curr = curr->next;
+                    }
+
+                    // Add new node to list
+                    curr->next = newPredNode(currItem.key);
+                // Found a better route to vertex
+                } else if (alternateDist < paths.dist[currAdjList->w]) {
+                    paths.dist[currAdjList->w] = alternateDist;
+
+                    // replace predList
+                    freePredList(paths.pred[currAdjList->w]);
+                    paths.pred[currAdjList->w] = newPredNode(currItem.key);
+
+                    // Update value on PQ
+                    ItemPQ update;
+                    update.key = currAdjList->w;
+                    update.value = paths.dist[currAdjList->w];
+                    // change priority of currAdjList
+                    updatePQ(myPQ, update);
+                }
             }
 
-        currAdjList = currAdjList->next;
+            currAdjList = currAdjList->next;
+        }
+    }
+
+    // Set all values that were not reached to zero
+    for (i = 0; i < nV; i++) {
+        if (paths.dist[i] == INFINITY) {
+            paths.dist[i] = 0;
         }
     }
 
@@ -103,7 +116,7 @@ void  showShortestPaths(ShortestPaths paths) {
     for (i = 0; i < paths.noNodes; i++) {
         printf("(Vertex: %d, Dist: %d) ", i, paths.dist[i]);
     }
-    
+
     PredNode *curr;
     for (i = 0; i < paths.noNodes; i++) {
         curr = paths.pred[i];
@@ -132,36 +145,12 @@ static PredNode* newPredNode (int v) {
     return new;
 }
 
-static PredNode* recordVertex (PredNode *list, int v) {
-    PredNode *new = newPredNode(v);
-    new->next = list;
-
-    return new;
-}
-
-static bool isAlreadyVisited (PredNode *list, int v) {
-    if (list == NULL) {
-        return false;
-    }
-    if (list->v == v) {
-        return true;
-    }
-    
-    return isAlreadyVisited(list->next, v);
-}
-
 static void freePredList (PredNode *list) {
-    if (list != NULL) {
-        freePredList(list->next);
-        free(list);
+    PredNode *temp;
+    PredNode *curr = list;
+    while (curr != NULL) {
+        temp = curr->next;
+        free(curr);
+        curr = temp;
     }
-}
-
-static void showPredList (PredNode *list) {
-    printf("Printing PredList => ");
-    while (list != NULL) {
-        printf("%d -> ", list->v);
-        list = list->next;
-    }
-    printf("\n");
 }

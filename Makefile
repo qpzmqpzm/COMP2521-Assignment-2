@@ -3,9 +3,9 @@
 CC = gcc
 CFLAGS =  -Wall -std=c11 -Werror -g
 AR = ar
-objs = Graph.o GraphVis.o CentralityMeasures.o PQ.o Dijkstra.o
+objs = Graph.o GraphVis.o CentralityMeasures.o PQ.o Dijkstra.o LanceWilliamsHAC.o
 
-all : testGraph testPQ testDijkstra testCentralityMeasures
+all : testGraph testPQ testDijkstra testCentralityMeasures testLanceWilliamsHAC
 
 $(objs) : %.o : %.c
 
@@ -24,6 +24,8 @@ testDijkstra : testDijkstra.c GraphLib.a
 testCentralityMeasures : testCentralityMeasures.c GraphLib.a
 	$(CC) -o testCentralityMeasures testCentralityMeasures.c GraphLib.a -lm
 
-clean :
-	rm -f *.o testCentralityMeasures testDijkstra testGraph testPQ GraphLib.a
+testLanceWilliamsHAC : testLanceWilliamsHAC.c GraphLib.a
+	$(CC) -o testLanceWilliamsHAC testLanceWilliamsHAC.c GraphLib.a -lm
 
+clean :
+	rm -f *.o testCentralityMeasures testDijkstra testGraph testPQ testLanceWilliamsHAC GraphLib.a

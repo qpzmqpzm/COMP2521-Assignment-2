@@ -93,13 +93,16 @@ int main(int argc, char* argv[]){
 		return EXIT_FAILURE;
 	}
 	Graph g = readGraph(argv[1]);
-	printf("HASN'T BEEN IMPLEMENTED\n");
 	if (argv[2][0] == 'd' && argv[2][1] == '\0') {
   	NodeValues val = degreeCentrality(g);
   	showNodeValues(val);
   	freeNodeValues(val);
 	} else if (argv[2][0] == 'd' && argv[2][1] == 'i') {
   	NodeValues val = inDegreeCentrality(g);
+  	showNodeValues(val);
+  	freeNodeValues(val);
+	} else if (argv[2][0] == 'd' && argv[2][1] == 'o') {
+  	NodeValues val = outDegreeCentrality(g);
   	showNodeValues(val);
   	freeNodeValues(val);
 	} else if (argv[2][0] == 'c' && argv[2][1] == '\0') {
@@ -110,11 +113,7 @@ int main(int argc, char* argv[]){
   	NodeValues val = betweennessCentrality(g);
   	showNodeValues(val);
   	freeNodeValues(val);
-	} else if (argv[2][0] == 'd' && argv[2][1] == 'o') {
-  	NodeValues val = outDegreeCentrality(g);
-  	showNodeValues(val);
-  	freeNodeValues(val);
-	} else if (argv[2][0] == 'b' && argv[2][1] == 'n') {
+	}  else if (argv[2][0] == 'b' && argv[2][1] == 'n') {
   	NodeValues val = betweennessCentralityNormalised(g);
   	showNodeValues(val);
   	freeNodeValues(val);

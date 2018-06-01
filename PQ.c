@@ -39,8 +39,10 @@ PQ newPQ(void) {
 }
 
 void  addPQ(PQ myPQ, ItemPQ item) {
+
     myPQ->queue[myPQ->size] = item;
     myPQ->size++;
+
 }
 
 // Warning: Do not pass in an empty PQ
@@ -49,7 +51,7 @@ ItemPQ dequeuePQ(PQ myPQ) {
     ItemPQ min = myPQ->queue[0];
     int minPos = 0;
     int i;
-    for (i = 0; i < myPQ->size; i++) {
+    for (i = 0; i < myPQ->size-1; i++) {
         if (min.value > myPQ->queue[i].value) {
             min = myPQ->queue[i];
             minPos = i;

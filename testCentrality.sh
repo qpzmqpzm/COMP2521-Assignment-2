@@ -6,6 +6,7 @@ make || exit
 mkdir -p output
 if [ $# -eq 1 ]; then
   i=$1
+  #for t in 'di' 'do' 'd' 'c' 'b' 'bn'; do
   for t in 'di' 'do' 'd' 'c' 'b' 'bn'; do
     ./testCentralityMeasures graphs/$i.in $t > output/$i$t.out
     r=`diff graphMeasurements/$i$t.out output/$i$t.out`
@@ -15,7 +16,7 @@ if [ $# -eq 1 ]; then
       echo -e "=========== ${RED}[$i][$t] Output Mismatch${NC} ============"
       diff graphMeasurements/$i$t.out output/$i$t.out
     fi
-    rm output/$i$t.out
+    #rm output/$i$t.out
   done
   exit
 elif [ $# -eq 2 ]; then
@@ -29,11 +30,11 @@ elif [ $# -eq 2 ]; then
     echo -e "=========== ${RED}[$i][$t] Output Mismatch${NC} ============"
     diff graphMeasurements/$i$t.out output/$i$t.out
   fi
-  rm output/$i$t.out
+  #rm output/$i$t.out
   exit
 fi
 for i in `seq 1 $n`; do
-  for t in 'di' 'do' 'd' 'c' 'b' 'bn'; do
+  for t in 'b'; do
     ./testCentralityMeasures graphs/$i.in $t > output/$i$t.out
     r=`diff graphMeasurements/$i$t.out output/$i$t.out`
     if [[ "$r" == "" ]]; then
@@ -42,6 +43,6 @@ for i in `seq 1 $n`; do
       echo -e "=========== ${RED}[$i][$t] Output Mismatch${NC} ============"
       diff graphMeasurements/$i$t.out output/$i$t.out
     fi
-    rm output/$i$t.out
+    #rm output/$i$t.out
   done
 done

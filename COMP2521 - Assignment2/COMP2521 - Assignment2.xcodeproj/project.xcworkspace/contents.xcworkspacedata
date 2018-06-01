@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:../../CentralityMeasures.c">
+   </FileRef>
+   <FileRef
+      location = "group:..">
+   </FileRef>
+   <FileRef
+      location = "group:../../COMP2521 18s1 - Assignment 2.pdf">
+   </FileRef>
+   <FileRef
+      location = "group:../../Dijkstra.c">
+   </FileRef>
+   <FileRef
+      location = "group:../../Dijkstra.h">
+   </FileRef>
+   <FileRef
+      location = "group:../../Dijkstra.o">
+   </FileRef>
+   <FileRef
+      location = "group:../../dijkstraPaths">
+   </FileRef>
+   <FileRef
+      location = "group:../../Graph.c">
+   </FileRef>
+   <FileRef
+      location = "group:../../Graph.h">
+   </FileRef>
+   <FileRef
+      location = "group:../../Graph.o">
+   </FileRef>
+   <FileRef
+      location = "group:../../GraphLib.a">
+   </FileRef>
+   <FileRef
+      location = "group:../../graphMeasurements">
+   </FileRef>
+   <FileRef
+      location = "group:../../graphs">
+   </FileRef>
+   <FileRef
+      location = "group:../../GraphVis.c">
+   </FileRef>
+   <FileRef
+      location = "group:../../GraphVis.h">
+   </FileRef>
+   <FileRef
+      location = "group:../../GraphVis.o">
+   </FileRef>
+   <FileRef
+      location = "group:../../graphVisFiles">
+   </FileRef>
+   <FileRef
+      location = "group:../../Makefile">
+   </FileRef>
+   <FileRef
+      location = "group:../../output">
+   </FileRef>
+   <FileRef
+      location = "group:../../PQ.c">
+   </FileRef>
+   <FileRef
+      location = "group:../../PQ.h">
+   </FileRef>
+   <FileRef
+      location = "group:../../PQ.o">
+   </FileRef>
+   <FileRef
+      location = "group:../../testCentrality.sh">
+   </FileRef>
+   <FileRef
+      location = "group:../../testCentralityMeasures">
+   </FileRef>
+   <FileRef
+      location = "group:../../testCentralityMeasures.c">
+   </FileRef>
+   <FileRef
+      location = "group:../../testDijkstra">
+   </FileRef>
+   <FileRef
+      location = "group:../../testDijkstra.c">
+   </FileRef>
+   <FileRef
+      location = "group:../../testDijkstra.sh">
+   </FileRef>
+   <FileRef
+      location = "group:../../testGraph">
+   </FileRef>
+   <FileRef
+      location = "group:../../testGraph.c">
+   </FileRef>
+   <FileRef
+      location = "group:../../testPQ">
+   </FileRef>
+   <FileRef
+      location = "group:../../testPQ.c">
+   </FileRef>
+   <FileRef
+      location = "group:../../zNotes">
+   </FileRef>
+   <FileRef
+      location = "group:../../CentralityMeasures.h">
+   </FileRef>
+   <FileRef
+      location = "group:../../CentralityMeasures.o">
+   </FileRef>
+   <FileRef
+      location = "self:COMP2521 - Assignment2.xcodeproj">
+   </FileRef>
+</Workspace>

@@ -34,17 +34,21 @@ Dendrogram LanceWilliamsHAC(Graph g, int method) {
     // Matrix will hold the distances between clusters
     // At the beginning, every vertex is its only cluster
     double distMatrix[nV][nV];
+    // Set all direct edge i -> j as INFINITY
+    int j;
+    for (j = 0; j < nV; j++) {
+        int i;
+        for (i = 0; i < nV; i++) {
+            distMatrix[i][j] = INFINITY;
+        }
+    }
 
     // Hence,
     // Get direct distances between all Edges
     AdjList currAdjList;
     int i;
     for (i = 0; i < nV; i++) {
-        // Set all direct edge i -> j as INFINITY
-        int j;
-        for (j = 0; j < nV; j++) {
-            distMatrix[i][j] = INFINITY;
-        }
+
 
         // Set the weights of existing direct edges with i -> j
         currAdjList = outIncident(g, i);
@@ -56,10 +60,12 @@ Dendrogram LanceWilliamsHAC(Graph g, int method) {
             // if INFINITY, nothing has been added there - add edge weight
             if (distMatrix[i][currAdjList->w] == INFINITY) {
                 distMatrix[i][currAdjList->w] = distance;
+                distMatrix[currAdjList->w][i] = distance;
             // 1/larger < 1/smaller
             // so if distance < what is stored in distance matrix, then store distance (larger edge weight)
             } else if (distance < distMatrix[i][currAdjList->w]) {
                 distMatrix[i][currAdjList->w] = distance;
+                distMatrix[currAdjList->w][i] = distance;
             }
 
             // Is this the closest cluster distance?
